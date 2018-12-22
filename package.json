@@ -7,7 +7,7 @@
     "start": "node bot.js",
     "lint": "eslint . --fix"
   },
-  "author": "Chris Briscoe & Justen Caldwell",
+  "author": "Justen Caldwell & Elijah Sattler",
   "dependencies": {
     "discord.js": "^11.4.2",
     "google-auth-library": "^2.0.2",
