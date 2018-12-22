@@ -1,0 +1,25 @@
+{
+  "name": "theme-music-bot",
+  "version": "1.0.0",
+  "description": "A bot for creating themed playlists that play for you in discord.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "lint": "eslint . --fix"
+  },
+  "author": "Chris Briscoe & Justen Caldwell",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "google-auth-library": "^2.0.2",
+    "googleapis": "^36.0.0",
+    "simple-youtube-api": "^5.1.1",
+    "winston": "^3.1.0",
+    "youtube-dl": "^1.12.2",
+    "youtube-mp3-downloader": "^0.5.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
