@@ -1,7 +1,5 @@
 node_modules
 buffer
-auth.json
-youtube.json
-client_secret.json
+secrets
 FunctionalityRequirements.txt
 DS_Store

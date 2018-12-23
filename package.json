@@ -4,7 +4,7 @@
   "description": "A bot for creating themed playlists that play for you in discord.",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js",
+    "start": "node src/bot.js",
     "lint": "eslint . --fix"
   },
   "author": "Justen Caldwell & Elijah Sattler",
