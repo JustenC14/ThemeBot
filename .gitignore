@@ -3,3 +3,4 @@ buffer
 secrets
 FunctionalityRequirements.txt
 DS_Store
+.eslintrc.json

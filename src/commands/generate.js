@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 const ytdl = require('ytdl-core');
 const youtubeTools = require('../helpers/youtubeTools');
 const utils = require('../helpers/utils');
