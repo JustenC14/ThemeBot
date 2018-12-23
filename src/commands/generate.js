@@ -1,13 +1,59 @@
+const fs = require('fs');
+const ytdl = require('ytdl-core');
 const youtubeTools = require('../helpers/youtubeTools');
+const utils = require('../helpers/utils');
 
 const methods = {};
 
-methods.generatePlaylist = async (bot, args) => {
+/**
+ * Generate a playlist of youtube videos from user keywords
+ * @param {Object} message Discord message
+ * @param {Array} args Array of keyword arguments
+ * @returns {Promise}
+ */
+methods.generatePlaylist = async (message, args) => {
   console.log('generating playlist...');
   // First get the list of videos based on the tag
   console.log('Looking to authenticate and search.');
   const videos = await youtubeTools.search(args);
   const videosInfo = await youtubeTools.getVideosInfo(videos);
+  const playlist = {};
+  let messageString = '```xl\n';
+  let counter = 1;
+  videosInfo.forEach((video) => {
+    console.log(video);
+    messageString += `${counter}: '${video.title}' - `;
+    messageString += `[${utils.formatTime(video.duration.hours)}:${utils.formatTime(video.duration.minutes)}:${utils.formatTime(video.duration.seconds)}]`;
+    messageString += ` https://youtube.com/watch?v=${video.id}\n`;
+    playlist[counter] = {};
+    playlist[counter].title = video.title;
+    playlist[counter].id = video.id;
+    playlist[counter].hours = video.duration.hours;
+    playlist[counter].minutes = video.duration.minutes;
+    playlist[counter].seconds = video.duration.seconds;
+    counter += 1;
+  });
+  messageString += '```';
+  message.channel.send(messageString);
+
+  const streamOptions = { seek: 0, volume: 1 };
+  const discordVoiceChannel = message.member.voiceChannel;
+  discordVoiceChannel.join().then((connection) => {
+    console.log('joined channel');
+    const stream = ytdl('https://www.youtube.com/watch?v=gOMhN-hfMtY', { filter: 'audioonly' });
+    const dispatcher = connection.playStream(stream, streamOptions);
+    dispatcher.on('end', (end) => {
+      console.log('left channel');
+      discordVoiceChannel.leave();
+    });
+    connection.on('error', (err) => {
+      console.log('err : ', err);
+    });
+    connection.on('disconnected', (err) => {
+      console.log('err : ', err);
+    });
+  }).catch(err => console.log(err));
+
   // console.log(videos);
   // console.log(videos[0].raw.snippet);
 

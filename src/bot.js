@@ -1,18 +1,10 @@
 /* eslint-disable no-await-in-loop, no-unused-vars */
 const Discord = require('discord.js');
-const logger = require('winston');
 // Local files
 const discordAuth = require('./secrets/discordAuth');
 const playlistGenerator = require('./commands/generate');
 
 let videosList;
-
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console(), {
-  colorize: true,
-});
-logger.level = 'debug';
 
 // Initialize Discord Bot
 const bot = new Discord.Client();
@@ -42,10 +34,10 @@ bot.on('message', async (message) => {
       case 'generate':
         if (args.length > 0) {
           console.log('generate playlist command entered...');
-          playlistGenerator.generatePlaylist(bot, args);
+          playlistGenerator.generatePlaylist(message, args);
         } else {
           message.channel.send('*In order to make a playlist'
-            + ' you need to add tags!*\n!play <tag> <tag>...');
+            + ' you need to add tags!*\n**!generate <tag> <tag>...**');
         }
         break;
       case 'play':
@@ -66,7 +58,7 @@ bot.on('message', async (message) => {
 
 
       default:
-        console.log('uh oh');
+        console.log(`invalid command ${cmd} entered...`);
     }
   }
 });

@@ -5,8 +5,13 @@ const youtubeAuth = require('../secrets/youtubeAuth');
 const youtube = new Youtube(youtubeAuth.token);
 
 const methods = {};
-const NUM_RESULTS = 3;
+const NUM_RESULTS = 10;
 
+/**
+ * Search and get a list of youtube videos from provided keywords
+ * @param {Array} args A list of keywords from the user
+ * @returns {Promise}
+ */
 methods.search = async (args) => {
   console.log(args);
 
@@ -25,9 +30,9 @@ methods.search = async (args) => {
 };
 
 /**
- * Get information about videos from a provided video ID list.
- * @param {Array} idList List of youtube video IDs.
- * @returns {Array} videosInfo List of information about the provided youtube video IDs.
+ * Get information about videos from a provided video ID list
+ * @param {Array} idList List of youtube video IDs
+ * @returns {Promise}
  */
 methods.getVideosInfo = async (idList) => {
   const videosInfo = [];
@@ -37,7 +42,6 @@ methods.getVideosInfo = async (idList) => {
     videosInfo.push(info);
   }
 
-  console.log(videosInfo);
   return videosInfo;
 };
 
