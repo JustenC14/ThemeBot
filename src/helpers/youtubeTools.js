@@ -5,7 +5,7 @@ const youtubeAuth = require('../secrets/youtubeAuth');
 const youtube = new Youtube(youtubeAuth.token);
 
 const methods = {};
-const NUM_RESULTS = 10;
+const NUM_RESULTS = 20;
 
 /**
  * Search and get a list of youtube videos from provided keywords

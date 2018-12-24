@@ -1,4 +1,5 @@
-// const fs = require('fs');
+const fs = require('fs');
+const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const youtubeTools = require('../helpers/youtubeTools');
 const utils = require('../helpers/utils');
@@ -17,14 +18,19 @@ methods.generatePlaylist = async (message, args) => {
   console.log('Looking to authenticate and search.');
   const videos = await youtubeTools.search(args);
   const videosInfo = await youtubeTools.getVideosInfo(videos);
+
   const playlist = {};
-  let messageString = '```xl\n';
+  const richMessage = new Discord.RichEmbed();
+
+  richMessage.setAuthor(message.author.username, message.author.avatar);
+  richMessage.setTitle('Here is a playlist we generated from your tags:');
+  richMessage.setFooter('Playlist Generated');
+  richMessage.setTimestamp();
+
   let counter = 1;
   videosInfo.forEach((video) => {
-    console.log(video);
-    messageString += `${counter}: '${video.title}' - `;
-    messageString += `[${utils.formatTime(video.duration.hours)}:${utils.formatTime(video.duration.minutes)}:${utils.formatTime(video.duration.seconds)}]`;
-    messageString += ` https://youtube.com/watch?v=${video.id}\n`;
+    richMessage.addField(`${counter}: ${video.title} - ${utils.formatTime(video.duration.hours)}:${utils.formatTime(video.duration.minutes)}:${utils.formatTime(video.duration.seconds)}`,
+      `https://youtube.com/watch?v=${video.id}`);
     playlist[counter] = {};
     playlist[counter].title = video.title;
     playlist[counter].id = video.id;
@@ -33,8 +39,32 @@ methods.generatePlaylist = async (message, args) => {
     playlist[counter].seconds = video.duration.seconds;
     counter += 1;
   });
-  messageString += '```';
-  message.channel.send(messageString);
+
+  message.channel.send({ richMessage });
+
+  // let messageString = '```xl\n';
+  // let counter = 1;
+
+  // // Generate the message of the generated playlist and prepare the object for JSON storage
+  // videosInfo.forEach((video) => {
+  //   console.log(video);
+  //   messageString += `${counter}: '${video.title}' - `;
+  //   messageString += `[${utils.formatTime(video.duration.hours)}:${utils.formatTime(video.duration.minutes)}:${utils.formatTime(video.duration.seconds)}]`;
+  //   messageString += ` https://youtube.com/watch?v=${video.id}\n`;
+  //   playlist[counter] = {};
+  //   playlist[counter].title = video.title;
+  //   playlist[counter].id = video.id;
+  //   playlist[counter].hours = video.duration.hours;
+  //   playlist[counter].minutes = video.duration.minutes;
+  //   playlist[counter].seconds = video.duration.seconds;
+  //   counter += 1;
+  // });
+  // messageString += '```';
+
+  // // Send the message and store the playlist object in generatedPlaylist.json in buffer
+  // message.channel.send(messageString);
+
+  fs.writeFileSync('../buffer/generatedPlaylist.json', JSON.stringify(playlist));
 
   const streamOptions = { seek: 0, volume: 1 };
   const discordVoiceChannel = message.member.voiceChannel;
@@ -43,7 +73,7 @@ methods.generatePlaylist = async (message, args) => {
     const stream = ytdl('https://www.youtube.com/watch?v=gOMhN-hfMtY', { filter: 'audioonly' });
     const dispatcher = connection.playStream(stream, streamOptions);
     dispatcher.on('end', (end) => {
-      console.log('left channel');
+      console.log('left channel ', end);
       discordVoiceChannel.leave();
     });
     connection.on('error', (err) => {
