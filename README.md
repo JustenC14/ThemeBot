@@ -49,6 +49,22 @@ The `!replay` command works similarly to `!play` by taking an `<id>` also. Howev
 executes the `!replay <id>` command, the `<id>` corresponds to the `<id>` the song is provided when
 using the `!history` command.
 
+## Future Plans
+
+ThemeBot is still at its very early development stages. We have decided to take the bot in a direction
+more focused towards assisting people in running D&D campaigns through Discord. With that being said
+here is an unordered list of currently planned/discussed features we want to add once we finish
+our original functionality.
+* Information retrieval from [A D&D API](http://www.dnd5eapi.co/). Things like spells, enemies...
+* Automatic SMS/Facebook message sending to members of the D&D group reminding them of upcoming sessions
+* Dice rolling
+* Attack turn handling for the DM
+* Damage tracking for the DM
+* Automatic encounter generation based on provided information (difficulty, level, biome...)
+
+As we continue to think of features and make our friends test the bot, there is a high likely-hood we will
+come up with even more features we would like to add.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
