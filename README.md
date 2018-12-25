@@ -1,5 +1,8 @@
 # ThemeBot
 
+<<img src="https://cdn.discordapp.com/attachments/521170567290945546/527048348708896778/ThemeBotIcon2.png" align="right"
+     title="ThemeBot" width="120" height="120">>
+
 ThemeBot is a Discord bot that allows users to generate playlists
 automatically based on tags, and then play those generated playlists
 in a discord voice channel.
