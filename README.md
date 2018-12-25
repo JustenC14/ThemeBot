@@ -1,4 +1,4 @@
-# ThemeBotg
+# ThemeBot
 
 ThemeBot is a Discord bot that allows users to generate playlists
 automatically based on tags, and then play those generated playlists
